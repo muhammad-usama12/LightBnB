@@ -16,45 +16,25 @@ const pool = new Pool({
  * @return {Promise<{}>} A promise to the user.
  */
 
-//  const getUserWithEmail = function(email) {
-//   return pool
-//     .query(`
-//       SELECT *
-//       FROM users
-//       WHERE email = $1;
-//       `, [email]
-//     )
-//     .then((result) => {
-//       if (result.rows[0]) {
-//         return Promise.resolve(result.rows[0]);
-//       } else {
-//         return null;
-//       }
-//     })
-//     .catch((err) => {
-//       console.log(err.message);
-//     });
-
 const getUserWithEmail = function (email) {
   return pool
     .query(
       `
-      SELECT *
-      FROM users 
-      WHERE email = $1;
-      `,
+SELECT * 
+FROM users
+WHERE email = $1;
+`,
       [email]
     )
-    .then((result) => {
-      if (result.rows[0]) {
-        console.log(result.rows);
-        return Promise.resolve(result.rows[0]);
+    .then((res) => {
+      if (res.rows[0]) {
+        return Promise.resolve(res.rows[0]);
       } else {
         return null;
       }
     })
     .catch((err) => {
-      console.log(err.message);
+      console.error("query error:", err);
     });
 };
 
